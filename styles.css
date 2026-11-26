@@ -1,0 +1,95 @@
+:root {
+  --bg: #0b0b12;
+  --panel: rgba(15, 15, 26, .96);
+  --text: #f2f2f7;
+  --accent: #ffcc44;
+  --chip: rgba(255, 255, 255, .14);
+}
+* { box-sizing: border-box; margin: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--text);
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+#viewfinder { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+
+.grid-layer { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+.level-bubble {
+  position: fixed; left: 50%; top: 12%; width: 84px; height: 10px; margin-left: -42px;
+  border-radius: 6px; background: rgba(255,255,255,.15); pointer-events: none;
+}
+.level-bubble::after {
+  content: ""; position: absolute; top: -4px; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--accent); transform: translateX(var(--x, 33px)); transition: transform .1s linear;
+}
+.level-bubble.flat::after { background: #4cd964; }
+
+.hint-bar {
+  position: fixed; left: 50%; bottom: 210px; transform: translateX(-50%);
+  background: rgba(0,0,0,.72); color: #fff; padding: 8px 14px; border-radius: 18px;
+  font-size: 13px; max-width: 86vw; text-align: center;
+}
+
+.flash { position: fixed; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+.flash.on { opacity: .85; transition: none; }
+.flash.off { opacity: 0; transition: opacity .35s ease-out; }
+
+#topbar {
+  position: fixed; top: 0; left: 0; right: 0; padding: calc(env(safe-area-inset-top, 0) + 10px) 14px 10px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.icon-btn, .chip {
+  background: var(--chip); color: var(--text); border: none; border-radius: 14px;
+  padding: 10px 14px; font-size: 16px; cursor: pointer;
+}
+.res-badge { background: rgba(0,0,0,.55); padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; letter-spacing: .4px; }
+
+.panel {
+  position: fixed; right: 10px; top: calc(env(safe-area-inset-top, 0) + 60px);
+  width: min(330px, 92vw); max-height: 70vh; overflow-y: auto;
+  background: var(--panel); border-radius: 18px; padding: 16px; z-index: 30;
+  box-shadow: 0 12px 40px rgba(0,0,0,.6);
+}
+.panel h2 { font-size: 16px; margin-bottom: 10px; }
+.panel h3 { font-size: 14px; margin: 12px 0 6px; color: var(--accent); }
+.panel .tips { font-size: 13px; line-height: 1.5; padding-left: 18px; }
+.panel .tips li { margin-bottom: 6px; }
+#sceneAdvice { font-size: 13px; line-height: 1.5; background: rgba(255,255,255,.07); border-radius: 12px; padding: 10px; }
+
+.ctrl { margin: 12px 0; font-size: 13px; }
+.ctrl label { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.ctrl input[type=range] { width: 100%; accent-color: var(--accent); }
+.ctrl.row { display: flex; justify-content: space-between; align-items: center; }
+.ctrl.row input { width: 20px; height: 20px; accent-color: var(--accent); }
+
+#controls { position: fixed; bottom: 0; left: 0; right: 0;
+  padding: 10px 14px calc(env(safe-area-inset-bottom, 0) + 16px); z-index: 20; }
+.mode-row { display: flex; gap: 8px; margin-bottom: 14px; }
+.mode-row select {
+  flex: 1; background: rgba(0,0,0,.6); color: var(--text); border: 1px solid rgba(255,255,255,.18);
+  border-radius: 12px; padding: 9px 8px; font-size: 13px;
+}
+.chip.active { background: var(--accent); color: #111; font-weight: 700; }
+
+.shutter-row { display: flex; align-items: center; justify-content: space-between; }
+.thumb-box, .thumb-spacer { width: 54px; height: 54px; border-radius: 12px; background: rgba(255,255,255,.12); overflow: hidden; }
+.thumb-box img { width: 100%; height: 100%; object-fit: cover; }
+#shutter {
+  width: 74px; height: 74px; border-radius: 50%; border: 4px solid #fff;
+  background: #fff; cursor: pointer;
+}
+#shutter:active { transform: scale(.92); }
+
+.gallery {
+  position: fixed; inset: 0; background: rgba(5,5,12,.96); z-index: 40; overflow-y: auto; padding: 16px;
+}
+.gallery .chip { position: fixed; top: calc(env(safe-area-inset-top, 0) + 12px); right: 14px; }
+#shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 54px; }
+#shots figure { margin: 0; }
+#shots img { width: 100%; border-radius: 10px; display: block; }
+#shots figcaption { font-size: 11px; opacity: .8; padding: 4px 2px; }
+#shots a { color: var(--accent); font-size: 12px; }
+
+@media (min-width: 768px) {
+  .panel { right: 24px; }
+  #shots { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+}

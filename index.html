@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0b12">
+<title>ProCam — Camera Assistant</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<video id="viewfinder" autoplay playsinline muted></video>
+<canvas id="grid" class="grid-layer"></canvas>
+<div id="levelBubble" class="level-bubble"></div>
+<div id="hintBar" class="hint-bar" hidden></div>
+<div id="flash" class="flash"></div>
+
+<header id="topbar">
+  <button id="tipsBtn" class="icon-btn" aria-label="Photo assistant">💡</button>
+  <div id="resBadge" class="res-badge">…</div>
+  <button id="switchBtn" class="icon-btn" aria-label="Switch camera">🔄</button>
+</header>
+
+<aside id="tipsPanel" class="panel" hidden>
+  <h2>Photo Assistant</h2>
+  <div id="sceneAdvice"></div>
+  <h3>How to take a beautiful picture</h3>
+  <ol class="tips">
+    <li><b>Light first.</b> Face a window or the sun — never put your subject against the light.</li>
+    <li><b>Golden hour.</b> Soft, warm photos come right after sunrise / before sunset.</li>
+    <li><b>Rule of thirds.</b> Keep the subject on the grid lines, not dead center.</li>
+    <li><b>Get closer, not zoomed.</b> Move your feet; digital zoom softens detail.</li>
+    <li><b>Tap to focus</b>, then drag the exposure down slightly for richer colors.</li>
+    <li><b>Steady + clean lens.</b> Wipe the lens, hold with two hands, breathe out, shoot.</li>
+    <li><b>Straight horizons.</b> Use the level bubble; keep lines parallel.</li>
+    <li><b>Shoot 4K/8K</b> when light is good; drop to 1080p when dark (bigger pixels, less noise).</li>
+  </ol>
+  <button id="closeTips" class="chip">Close</button>
+</aside>
+
+<aside id="proPanel" class="panel" hidden>
+  <h2>Pro Mode</h2>
+  <div class="ctrl"><label>Exposure <span id="evVal">0</span></label><input type="range" id="ev" min="-200" max="200" step="10" value="0"></div>
+  <div class="ctrl"><label>ISO <span id="isoVal">auto</span></label><input type="range" id="iso" min="0" max="100" step="1" value="0"></div>
+  <div class="ctrl"><label>Zoom <span id="zoomVal">1.0×</span></label><input type="range" id="zoom" min="100" max="400" step="10" value="100"></div>
+  <div class="ctrl"><label>White balance <span id="wbVal">auto</span></label><input type="range" id="wb" min="0" max="100" step="1" value="0"></div>
+  <div class="ctrl row"><label>Focus at infinity</label><input type="checkbox" id="infFocus"></div>
+  <div class="ctrl row"><label>Torch</label><input type="checkbox" id="torch"></div>
+  <div class="ctrl row"><label>Grid lines</label><input type="checkbox" id="gridToggle" checked></div>
+  <div class="ctrl row"><label>Level bubble</label><input type="checkbox" id="levelToggle" checked></div>
+  <button id="closePro" class="chip">Close</button>
+</aside>
+
+<footer id="controls">
+  <div class="mode-row">
+    <select id="resSelect" aria-label="Resolution">
+      <option value="7680">8K</option>
+      <option value="3840">4K</option>
+      <option value="1920" selected>FHD 1080p</option>
+      <option value="1280">HD 720p</option>
+    </select>
+    <select id="filterSelect" aria-label="Filter">
+      <option value="none">No filter</option>
+      <option value="enhance">✨ Enhance (auto-boost)</option>
+      <option value="vivid">Vivid</option>
+      <option value="warm">Golden</option>
+      <option value="cool">Cool</option>
+      <option value="mono">Mono</option>
+      <option value="fade">Soft fade</option>
+      <option value="hdr">HDR tone</option>
+    </select>
+    <button id="proBtn" class="chip">Pro</button>
+  </div>
+  <div class="shutter-row">
+    <div id="galleryBtn" class="thumb-box"><img id="lastShot" alt="Last photo" hidden></div>
+    <button id="shutter" aria-label="Take photo"></button>
+    <div class="thumb-spacer"></div>
+  </div>
+</footer>
+
+<div id="gallery" class="gallery" hidden>
+  <button id="closeGallery" class="chip">✕ Close</button>
+  <div id="shots"></div>
+</div>
+
+<a id="download" hidden></a>
+<script src="app.js"></script>
+</body>
+</html>
